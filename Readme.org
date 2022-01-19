@@ -1,0 +1,31 @@
+* Kevin Kelley's PPA Emacs in Docker
+  This repository contains all the necessary tools to build and run [[https://launchpad.net/~kelleyk/+archive/ubuntu/emacs][Kevin Kelley's Emacs PPA package]] in a Docker image.
+
+  The image is based on latest Ubuntu LTS version, adds the Emacs PPA from Launchpad and installs Emacs using Ubuntu's standard ~apt-get~. You only need Docker installed on your system.
+
+  You can specify which Emacs package to install on build, with ~emacs27~ as the default, since ~emacs~ would install Ubuntu's package. See the PPA page for package details.
+
+** Usage
+*** Build
+   By default, the image is built by installing the ~emacs27~ package via ~apt-get~. Use the optional ~EMACS_PACKAGE~ build arg to customize:
+   #+begin_src shell
+   # Build from local git repo, specifying 'emacs27' package explicitly.
+   docker build --build-arg EMACS_PACKAGE=emacs27 -t kelleyk-emacs .
+   #+end_src
+   The Docker image can be built directly from this repo (ie. without cloning locally) by passing its URL as argument:
+   #+begin_src shell
+   # Build directly from git repo, specifying the 'main' branch (by default 'master', if not specified).
+   docker build -t kelleyk-emacs github.com/pataquets/docker-kelleyk-ppa-emacs.git#main
+   #+end_src
+*** Run
+   Examples below assume Docker image was built and tagged as ~kelleyk-emacs~ as shown above.
+
+   After building, you can run a one-off container which will be later deleted (due to the ~docker~ command ~--rm~ switch), just to print the Emacs version by passing the ~--version~ switch:
+   #+begin_src shell
+   docker run --rm -it kelleyk-emacs --version
+   #+end_src
+   Mount your home's ~.emacs.d~ directory, but read-only:
+   #+begin_src shell
+   docker run --rm -it -v $HOME/.emacs.d/:/root/.emacs.d/:ro kelleyk-emacs
+   #+end_src
+   The above examples will run TTY Emacs due to no X11 running inside the container. For running GUI Emacs use [[P][x11docker]], which will handle required X11 sharing to Docker container. Check x11docker docs for more info.
