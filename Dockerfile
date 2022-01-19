@@ -11,7 +11,7 @@ RUN \
   apt-key adv --keyserver hkps://keyserver.ubuntu.com --recv-keys EAAFC9CD && \
     . /etc/lsb-release && \
   echo "deb http://ppa.launchpad.net/kelleyk/emacs/ubuntu ${DISTRIB_CODENAME} main" \
-    | tee /etc/apt/sources.list.d/rsyslog.list \
+    | tee /etc/apt/sources.list.d/kelleyk-emacs.list \
   && \
   apt-get purge -y --autoremove \
     gnupg \
