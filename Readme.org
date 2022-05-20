@@ -28,4 +28,4 @@
    #+begin_src shell
    docker run --rm -it -v $HOME/.emacs.d/:/root/.emacs.d/:ro kelleyk-emacs
    #+end_src
-   The above examples will run TTY Emacs due to no X11 running inside the container. For running GUI Emacs use [[P][x11docker]], which will handle required X11 sharing to Docker container. Check x11docker docs for more info.
+   The above examples will run TTY Emacs due to no X11 running inside the container. For running GUI Emacs use [[https://github.com/mviereck/x11docker][x11docker]], which will handle required X11 sharing to Docker container. Check x11docker docs for more info.
