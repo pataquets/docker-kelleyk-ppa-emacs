@@ -1,16 +1,16 @@
 * Kevin Kelley's PPA Emacs in Docker
-  This repository contains all the necessary tools to build and run [[https://launchpad.net/~kelleyk/+archive/ubuntu/emacs][Kevin Kelley's Emacs PPA package]] in a Docker image.
+  This repository contains all the necessary tools to build a Docker image with Emacs installed from [[https://launchpad.net/~kelleyk/+archive/ubuntu/emacs][Kevin Kelley's Emacs PPA package]].
 
-  The image is based on latest Ubuntu LTS version, adds the Emacs PPA from Launchpad and installs Emacs using Ubuntu's standard ~apt-get~. You only need Docker installed on your system.
+  The image is built (by default) from latest Ubuntu LTS version, adds kelleyk's Emacs PPA from Launchpad and installs Emacs using Ubuntu's standard ~apt-get~. You only need Docker installed on your system.
 
-  You can specify which Emacs package to install on build, with ~emacs27~ as the default, since ~emacs~ would install Ubuntu's package. See the PPA page for package details.
+  You can specify both the Ubuntu version and Emacs package to install on build using [[https://docs.docker.com/engine/reference/commandline/build/#set-build-time-variables---build-arg][build args]], with ~emacs28~ on Jammy as defaults, since ~emacs~ would install Ubuntu's package. See the PPA page for package details.
 
 ** Usage
 *** Build
-   By default, the image is built by installing the ~emacs27~ package via ~apt-get~. Use the optional ~EMACS_PACKAGE~ build arg to customize:
+   By default, the image is based on Ubuntu Jammy and installs the ~emacs28~ package via ~apt-get~. Use the optional ~UBUNTU_VERSION~ and ~EMACS_PACKAGE~ build args to customize:
    #+begin_src shell
-   # Build from local git repo, specifying 'emacs27' package explicitly.
-   docker build --build-arg EMACS_PACKAGE=emacs27 -t kelleyk-emacs .
+   # Build from local git repo, explicitly specifying Ubuntu Focal's 'emacs27' package.
+   docker build --build-arg UBUNTU_VERSION=focal --build-arg EMACS_PACKAGE=emacs27 -t kelleyk-emacs .
    #+end_src
    The Docker image can be built directly from this repo (ie. without cloning locally) by passing its URL as argument:
    #+begin_src shell

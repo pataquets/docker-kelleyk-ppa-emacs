@@ -1,4 +1,5 @@
-FROM ubuntu:focal
+ARG UBUNTU_VERSION
+FROM ubuntu:${UBUNTU_VERSION:-jammy}
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -23,11 +24,13 @@ ARG EMACS_PACKAGE
 RUN \
   apt-get update && \
   apt-get install -y \
-    ${EMACS_PACKAGE:-emacs27} \
+    ${EMACS_PACKAGE:-emacs28} \
   && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
-RUN emacs --version
+RUN \
+  cat /etc/lsb-release && \
+  emacs --version
 
 ENTRYPOINT [ "emacs" ]
